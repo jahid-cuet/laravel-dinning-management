@@ -28,20 +28,21 @@ class DinningMonth extends Model
                                 return $query->leftJoin('dinning_students', 'dinning_months.dinning_student_id', '=', 'dinning_students.id');
                             }
                             
-                        public function dinningStudent()
-                        {
-                            return $this->belongsTo(DinningStudent::class,'dinning_student_id','id');
-                        }
+                        // public function dinningStudent()
+                        // {
+                        //     return $this->belongsTo(DinningStudent::class,'dinning_student_id','id');
+                        // }
                         
                         public function dinningStudents()
                         {
                             return $this->hasMany(DinningStudent::class,'dinning_month_id');
                         }
-
-                          public function meals()
+                        public function refundRequests()
                         {
-                            return $this->hasMany(Meal::class,'dinning_month_id');
+                            return $this->hasMany(RefundRequest::class, 'dinning_month_id');
                         }
+
+
                         //RELATIONAL METHOD
                         
                         

@@ -83,10 +83,10 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-md-6">
+                                <div class="col-md-6">
 
                                     <div class="form-group">
-                                        <label class="form-label" for="user_id">User </label>
+                                        <label class="form-label" for="user_id">Dinning Manager</label>
                                         <select class="form-select search-select @error('user_id') is-invalid @enderror"
                                             data-live-search="true" id="user_id" name="user_id">
                                             <option value="">--Choose--</option>
@@ -101,54 +101,9 @@
                                         @enderror
                                     </div>
 
-                                </div> --}}
+                                </div>
                                 <div class="col-md-6">
 
-                                    {{-- <div class="form-group">
-                                        <label class="form-label" for="dinning_student_id">Dinning Manager
-                                            <span>&#x002A;</span> </label>
-                                        <select
-                                            class="form-select search-select @error('dinning_student_id') is-invalid @enderror"
-                                            data-live-search="true" id="dinning_student_id" name="dinning_student_id"
-                                            required>
-                                            <option value="">--Choose--</option>
-                                            @foreach (activeModelData('App\Models\DinningStudent') as $row)
-                                                <option value="{{ $row->id }}"
-                                                    @if (old('dinning_student_id') == $row->id) selected @endif>{{ $row->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @error('dinning_student_id')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div> --}}
-                                    <div class="form-group">
-    <label class="form-label" for="dinning_student_id">Dinning Manager <span>&#x002A;</span></label>
-    <select
-        class="form-select search-select @error('dinning_student_id') is-invalid @enderror"
-        data-live-search="true"
-        id="dinning_student_id"
-        name="dinning_student_id"
-        {{ count($students) == 0 ? 'disabled' : '' }}
-        required
-    >
-        <option value="">--Choose--</option>
-        @foreach ($students as $row)
-            <option value="{{ $row->id }}"
-                @if (old('dinning_student_id') == $row->id) selected @endif>
-                {{ $row->name }}
-            </option>
-        @endforeach
-    </select>
-
-    @error('dinning_student_id')
-        <div class="invalid-feedback">{{ $message }}</div>
-    @enderror
-
-    @if(count($students) == 0)
-        <small class="text-danger mt-2">⚠️ No students available. Please add students first to assign a dining manager.</small>
-    @endif
-</div>
 
 
                                 </div>

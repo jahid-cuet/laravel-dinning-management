@@ -13,9 +13,9 @@ class StudentSession extends Model
     protected $guarded = [];     
     
     
-                        public function dinningStudents()
+                        public function users()
                         {
-                            return $this->hasMany(DinningStudent::class,'student_session_id');
+                            return $this->hasMany(User::class,'student_session_id');
                         }
                         //RELATIONAL METHOD
                         

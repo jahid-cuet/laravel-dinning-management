@@ -10,7 +10,9 @@ use App\Models\RefundMeal;
 
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\RefundMealExport;
-
+use App\Models\Meal;
+use App\Models\User;
+use Carbon\Carbon;
 
 class RefundMealController extends Controller
 {
@@ -24,46 +26,30 @@ class RefundMealController extends Controller
 
     public function index(Request $request)
     {
-        $page_title = 'Refund Meal';
+        $page_title = 'Today"s Meal';
         $info=new stdClass();
-        $info->title = 'Refund Meals';
-        $info->first_button_title = 'Add Refund Meal';
+        $info->title = 'Today"s Meal';
+        $info->first_button_title = 'Add Today Meal';
         $info->first_button_route = 'admin.refund-meals.create';
         $info->route_index = 'admin.refund-meals.index';
-        $info->description = 'These all are Refund Meals';
-
+        $info->description = 'These all are Today"s Meals';
 
         $per_page =request('per_page', 20);
         $with_data=[];
 
-        $data = RefundMeal::query();
 
-        
-        if(isset($request->search) && trim($request->search)!=''){
-            $search_columns = ['id','meal_date','lunch','dinner'];
-            $data=keywordBaseSearch(
-                $searh_key=$request->search,
-                $columns_array=$search_columns,
-                $model_query=$data
-            );
-        }
-        
+$today = Carbon::today()->toDateString();
 
-        
-        if($request->export_table)
-        {
-            $filePath='RefundMeals.csv';
-            $export_data=$data->get();
-            $excel_data=new RefundMealExport($export_data);
-            return Excel::download($excel_data, $filePath);
-        }
-        
+// Query unique user IDs who have meals today
+$data = Meal::where('meal_date', $today)
+    ->distinct('user_id') // get one meal per user
+    ->orderBy('id', 'DESC')
+    ->paginate($per_page);
+// Now paginate the users based on those IDs
 
-        $data =$data->orderBy('id', 'DESC');
-        $data =$data->paginate($per_page);
 
-        return view('admin.refund-meals.index', compact('page_title', 'data', 'info','per_page'))->with($with_data);
-        
+return view('admin.refund-meals.index', compact('page_title', 'data', 'info', 'per_page'))
+    ->with($with_data);
     }
 
 

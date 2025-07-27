@@ -40,7 +40,7 @@ class RefundRequestController extends Controller
         $per_page = request('per_page', 20);
         $with_data=[];
 
-        $data = RefundRequest::with('dinningStudent');
+        $data = RefundRequest::with('user');
 
         
         if(isset($request->search) && trim($request->search)!=''){

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Department;
+use App\Models\StudentSession;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -17,7 +19,10 @@ class RegisteredUserController extends Controller
 
  public function create()
     {
-        return view('Frontend.register');
+        $departments = Department::all();
+        $sessions = StudentSession::all();
+
+        return view('Frontend.register',compact('departments', 'sessions'));
     }
     /**
      * Handle an incoming registration request.
@@ -104,24 +109,21 @@ class RegisteredUserController extends Controller
         // }
 
     $request->validate([
-        'name' => ['required', 'string', 'max:255'],
-        'email' => ['nullable', 'string', 'email', 'max:255', 'unique:users,email'],
-        'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        // Optional: validate other fields if needed
-        'country_code' => ['nullable', 'string'],
-        'phone' => ['nullable', 'string'],
-        'notify_by' => ['nullable', 'string'],
-        'signup_by' => ['nullable', 'string'],
+    'student_id' => ['required', 'string', 'max:255', 'unique:users,student_id'],
+    'name' => ['required', 'string', 'max:255'],
+    'email' => ['nullable', 'string', 'email', 'max:255', 'unique:users,email'],
+    'department_id' => ['required', 'integer', Rule::exists('departments', 'id')],
+    'student_session_id' => ['required', 'integer', Rule::exists('student_sessions', 'id')],
+    'password' => ['required', 'confirmed', Rules\Password::defaults()],
     ]);
 
     $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-        'country_code' => $request->country_code,
-        'phone' => $request->phone,
-        'notify_by' => $request->notify_by,
-        'signup_by' => $request->signup_by,
+   'student_id' => $request->student_id,
+    'name' => $request->name,
+    'email' => $request->email,
+    'department_id' => $request->department_id,
+    'student_session_id' => $request->student_session_id,
+    'password' => Hash::make($request->password),
         // 'provider', 'provider_id', etc. can be added if using social login
     ]);
 

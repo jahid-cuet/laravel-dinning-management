@@ -35,8 +35,39 @@ use App\Http\Controllers\Admin\SwaggerGeneratorController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\LangController;
-
+use App\Http\Controllers\SslCommerzPaymentController;
 use Spatie\Health\Http\Controllers\HealthCheckResultsController;
+
+
+
+Route::group(['middleware' => 'auth'], function () {
+
+// SSLCOMMERZ Start
+Route::get('/checkout', [SslCommerzPaymentController::class, 'exampleEasyCheckout'])->name('checkout');
+Route::get('/checkout2', [SslCommerzPaymentController::class, 'exampleHostedCheckout']);
+
+Route::post('/pay', [SslCommerzPaymentController::class, 'index']);
+Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
+
+Route::post('/success', [SslCommerzPaymentController::class, 'success']);
+Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
+Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
+
+Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
+//SSLCOMMERZ END
+});
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

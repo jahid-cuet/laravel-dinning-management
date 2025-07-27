@@ -129,9 +129,10 @@
       'root' => true,
       'icon' => 'lni lni-list',
       'page' => '/admin/dinning-students',
-      'permission' => 'dinning-students',
+      'permission' => 'dinning-months',
       'new-tab' => false,
     ),
+
     15=> 
     array (
       'title' => 'Departments',
@@ -150,16 +151,16 @@
       'permission' => 'student-sessions',
       'new-tab' => false,
     ),
+    // 17 => 
+    // array (
+    //   'title' => 'Meal',
+    //   'root' => true,
+    //   'icon' => 'lni lni-list',
+    //   'page' => '/admin/meals',
+    //   'permission' => 'meals',
+    //   'new-tab' => false,
+    // ),
     17 => 
-    array (
-      'title' => 'Meal',
-      'root' => true,
-      'icon' => 'lni lni-list',
-      'page' => '/admin/meals',
-      'permission' => 'meals',
-      'new-tab' => false,
-    ),
-    18 => 
     array (
       'title' => 'Meal Token',
       'root' => true,
@@ -168,7 +169,8 @@
       'permission' => 'meal-tokens',
       'new-tab' => false,
     ),
-    19 => 
+
+    18 => 
     array (
       'title' => 'Refund Requests',
       'root' => true,
@@ -177,28 +179,18 @@
       'permission' => 'refund-requests',
       'new-tab' => false,
     ),
-    20 => 
+
+    19 => 
     array (
-      'title' => 'Refund Meals',
+      'title' => 'Today Meals',
       'root' => true,
       'icon' => 'lni lni-list',
-      'page' => '/admin/refund-meals',
-      'permission' => 'refund-meals',
+      'page' => '/admin/today-meals',
+      'permission' => 'today-meals',
       'new-tab' => false,
     ),
 
-    21 => 
-    array (
-      'title' => 'Monthly Meal Details',
-      'root' => true,
-      'icon' => 'lni lni-list',
-      'page' => '/admin/monthly-meal-details',
-      'permission' => 'monthly-meal-details',
-      'new-tab' => false,
-    ),
-  
-    
-    22=> 
+    20=> 
     array (
       'title' => 'Logout',
       'root' => true,

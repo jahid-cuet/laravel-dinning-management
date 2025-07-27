@@ -63,7 +63,7 @@
                                 <th>Meals</th>
                                 <th>Refund Amount</th>
                                 <th>Status</th>
-                                <th>Actions</th>
+                                <th>Dinnig Month</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -75,26 +75,26 @@
                             @foreach ($data as $row)
                                 <tr>
                                     <td>{{  $serial }}</td>
-                                    <td>{{ $row->dinningStudent->name }} ({{ $row->dinningStudent->student_id }})</td>
-                                    <td>{{ $row->dinningStudent->department->name}}</td>
-                                    <td>{{ $row->dinningStudent->studentSession->name}}</td>
+                                    <td>{{ $row->user?->name }} ({{ $row->user->student_id }})</td>
+                                    <td>{{ $row->user->department->name}}</td>
+                                    <td>{{ $row->user->studentSession->name}}</td>
                                     <td>{{ $row->total_meal}}</td>
                                     <td>{{ $row->total_amount }} TK</td>
                                     <td>{{ $row->status }}</td>
-                                    <td>
+                                    <td>{{ \Carbon\Carbon::parse($row->dinningMonth?->from)->format('d-m-Y') }} - {{ \Carbon\Carbon::parse($row->dinningMonth?->to)->format('d-m-Y') }}
+</td>
+                                    {{-- <td>
                                         @if ($row->status == 'Pending')
                                             <a href="" class="btn btn-success">Approve</a>
                                             <a href=" " class="btn btn-danger">Reject</a>
-                                            {{-- <a href="{{ route('admin.refund.approve', $row->id) }}" class="btn btn-success">Approve</a>
-                <a href="{{ route('admin.refund.reject', $row->id) }}" class="btn btn-danger">Reject</a> --}}
                                         @else
                                             {{ $row->status }}
                                         @endif
-                                    </td>
+                                    </td> --}}
 
 
                                     
-                                    <td>
+                                    {{-- <td>
                                         <ul class="trk-action__list">
                                             <li class="trk-action">
                                                 <a class="trk-action__item trk-action__item--success"
@@ -120,7 +120,7 @@
                                             @endcan
                                         </ul>
 
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 @php
                                     $serial++;

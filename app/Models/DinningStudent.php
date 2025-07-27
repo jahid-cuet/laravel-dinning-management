@@ -14,10 +14,10 @@ class DinningStudent extends Model
     protected $guarded = [];
 
 
-    public function dinningMonths()
-    {
-        return $this->hasMany(DinningMonth::class, 'dinning_student_id');
-    }
+    // public function dinningMonths()
+    // {
+    //     return $this->hasMany(DinningMonth::class, 'dinning_student_id');
+    // }
 
     public function scopeWithUser($query)
     {
@@ -59,16 +59,10 @@ class DinningStudent extends Model
         return $this->belongsTo(StudentSession::class, 'student_session_id', 'id');
     }
 
-    public function meals()
-    {
-        return $this->hasMany(Meal::class, 'dinning_student_id');
-    }
 
 
-    public function mealTokens()
-    {
-        return $this->hasMany(MealToken::class, 'dinning_student_id');
-    }
+
+   
 
     public function refundRequests()
     {

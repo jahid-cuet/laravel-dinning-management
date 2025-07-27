@@ -13,9 +13,9 @@ class Department extends Model
     protected $guarded = [];     
     
     
-                        public function dinningStudents()
+                        public function users()
                         {
-                            return $this->hasMany(DinningStudent::class,'department_id');
+                            return $this->hasMany(User::class,'department_id');
                         }
                         //RELATIONAL METHOD
                         

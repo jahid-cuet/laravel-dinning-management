@@ -35,6 +35,9 @@ class User extends Authenticatable implements HasMedia,MustVerifyEmail
      */
     protected $fillable = [
         'name',
+        'student_id',
+        'student_session_id',
+        'department_id',
         'country_code',
         'notify_by',
         'signup_by',
@@ -97,9 +100,38 @@ class User extends Authenticatable implements HasMedia,MustVerifyEmail
             ->sharpen(10);
     }
 
+
+    // Additional Relation
+        public function department()
+    {
+        return $this->belongsTo(Department::class, 'department_id', 'id');
+    }
+
+        public function studentSession()
+    {
+        return $this->belongsTo(StudentSession::class, 'student_session_id', 'id');
+    }
+
     public function dinningStudents()
     {
         return $this->hasMany(DinningStudent::class,'user_id');
+    }
+
+        public function meals()
+    {
+        return $this->hasMany(Meal::class,'user_id');
+    }
+
+
+    
+    public function refundRequests()
+    {
+        return $this->hasMany(RefundRequest::class, 'user_id');
+    }
+
+     public function mealTokens()
+    {
+        return $this->hasMany(MealToken::class, 'user_id');
     }
 
     //RELATIONAL METHOD

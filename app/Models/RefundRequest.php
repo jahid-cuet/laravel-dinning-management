@@ -18,16 +18,28 @@ class RefundRequest extends Model
                                 return $query->leftJoin('dinning_students', 'refund_requests.dinning_student_id', '=', 'dinning_students.id');
                             }
                             
-                        public function dinningStudent()
+                        public function user()
                         {
-                            return $this->belongsTo(DinningStudent::class,'dinning_student_id','id');
+                            return $this->belongsTo(User::class,'user_id','id');
                         }
                         
                         public function refundMeals()
                         {
                             return $this->hasMany(RefundMeal::class,'refund_request_id');
                         }
-                        //RELATIONAL METHOD
+
+
+                        public function meals()
+                        {
+                            return $this->hasMany(Meal::class,'refund_request_id');
+                        }
+
+
+                        public function dinningMonth()
+                        {
+                            return $this->belongsTo(DinningMonth::class, 'dinning_month_id', 'id');
+                        }
+                                            //RELATIONAL METHOD
                         
                         
                             

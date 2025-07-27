@@ -69,8 +69,8 @@
 
                                 <th>Actions</th>
 
-                               
-                             
+
+
                             </tr>
                         </thead>
                         <tbody>
@@ -79,48 +79,48 @@
                                 $serial = 1;
                             @endphp
 
-@foreach ($months as $serial => $month)
-<tr>
-    <td>{{ $serial + 1 }}</td>
-    <td>{{ $month->title }}</td>
-    <td>{{ $month->meal_rate }}</td>
-    <td>{{ date('d M Y', strtotime($month->from)) }}</td>
-    <td>{{ date('d M Y', strtotime($month->to)) }}</td>
-    {{-- <td>{{ $month->dinningStudent?->name ?? 'N/A' }}</td> --}}
-    <td>
-        <div class="form-check form-switch form-switch-md">
-            <input type="checkbox" name="is_active" value="{{ $month->id }}"
-                onclick="toggleSwitchStatus(this,'dinning_months');"
-                class="form-check-input" @if ($month->is_active == 1) checked @endif>
-        </div>
-    </td>
-    <td>{{ $month->total_students }}</td>
-    <td>{{ $month->total_meals }}</td>
-    <td>{{ $month->total_cost }}</td>
-    <td>
-        <ul class="trk-action__list">
-            <li class="trk-action">
-                <a class="trk-action__item trk-action__item--success"
-                    href="{{ route('admin.dinning-months.show', $month->id) }}">
-                    <i class="lni lni-eye"></i>
-                </a>
-            </li>
-            <li class="trk-action">
-                <a class="trk-action__item trk-action__item--warning"
-                    href="{{ route('admin.dinning-months.edit', $month->id) }}">
-                    <i class="lni lni-pencil-alt"></i>
-                </a>
-            </li>
-            <li class="trk-action">
-                <a onclick="deleteCrudItem(`{{ route('admin.dinning-months.destroy', $month->id) }}`)"
-                    class="trk-action__item trk-action__item--danger" href="#">
-                    <i class="lni lni-trash-can"></i>
-                </a>
-            </li>
-        </ul>
-    </td>
-</tr>
-@endforeach
+                            @foreach ($months as $serial => $month)
+                                <tr>
+                                    <td>{{ $serial + 1 }}</td>
+                                    <td>{{ $month->title }}</td>
+                                    <td>{{ $month->meal_rate }}</td>
+                                    <td>{{ date('d M Y', strtotime($month->from)) }}</td>
+                                    <td>{{ date('d M Y', strtotime($month->to)) }}</td>
+                                    {{-- <td>{{ $month->dinningStudent?->name ?? 'N/A' }}</td> --}}
+                                    <td>
+                                        <div class="form-check form-switch form-switch-md">
+                                            <input type="checkbox" name="is_active" value="{{ $month->id }}"
+                                                onclick="toggleSwitchStatus(this,'dinning_months');"
+                                                class="form-check-input" @if ($month->is_active == 1) checked @endif>
+                                        </div>
+                                    </td>
+                                    <td>{{ $month->total_students }}</td>
+                                    <td>{{ $month->total_meals }}</td>
+                                    <td>{{ $month->total_cost }}</td>
+                                    <td>
+                                        <ul class="trk-action__list">
+                                            <li class="trk-action">
+                                                <a class="trk-action__item trk-action__item--success"
+                                                    href="{{ route('admin.dinning-months.show', $month->id) }}">
+                                                    <i class="lni lni-eye"></i>
+                                                </a>
+                                            </li>
+                                            <li class="trk-action">
+                                                <a class="trk-action__item trk-action__item--warning"
+                                                    href="{{ route('admin.dinning-months.edit', $month->id) }}">
+                                                    <i class="lni lni-pencil-alt"></i>
+                                                </a>
+                                            </li>
+                                            <li class="trk-action">
+                                                <a onclick="deleteCrudItem(`{{ route('admin.dinning-months.destroy', $month->id) }}`)"
+                                                    class="trk-action__item trk-action__item--danger" href="#">
+                                                    <i class="lni lni-trash-can"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            @endforeach
 
                         </tbody>
                     </table>

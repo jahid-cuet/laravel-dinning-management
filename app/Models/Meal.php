@@ -18,9 +18,9 @@ class Meal extends Model
                                 return $query->leftJoin('dinning_students', 'meals.dinning_student_id', '=', 'dinning_students.id');
                             }
                             
-                        public function dinningStudent()
+                        public function user()
                         {
-                            return $this->belongsTo(DinningStudent::class,'dinning_student_id','id');
+                            return $this->belongsTo(User::class,'user_id','id');
                         }
                         
                             public function scopeWithDinningMonth($query)
@@ -28,9 +28,15 @@ class Meal extends Model
                                 return $query->leftJoin('dinning_months', 'meals.dinning_month_id', '=', 'dinning_months.id');
                             }
                             
+                        public function refundRequest()
+                        {
+                            return $this->belongsTo(RefundRequest::class,'refund_request_id','id');
+                        }
+
+
                         public function dinningMonth()
                         {
-                            return $this->belongsTo(DinningMonth::class,'dinning_month_id','id');
+                            return $this->belongsTo(DinningMonth::class, 'dinning_month_id','id');
                         }
                         //RELATIONAL METHOD
                         

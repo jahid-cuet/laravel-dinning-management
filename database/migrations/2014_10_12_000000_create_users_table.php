@@ -13,6 +13,13 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique()->nullable();
+            // Added Column for Dinning management
+            $table->string('avatar')->nullable();
+            $table->string('student_id')->unique();
+            $table->integer('total_meals')->nullable();
+            $table->integer('department_id')->nullable();
+            $table->integer('student_session_id')->nullable();
+
             $table->string('country_code')->nullable();
             $table->string('phone')->nullable();
             $table->string('notify_by')->nullable();
@@ -26,6 +33,8 @@ return new class extends Migration
             $table->string('verification_code')->nullable();
             $table->string('facebook_id')->nullable();
             $table->string('google_id')->nullable();   
+
+
             //ADDITIONAL_COLUMN
             $table->integer('is_active')->default(1);
             $table->rememberToken();

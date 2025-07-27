@@ -92,8 +92,8 @@
 
                                 <div class="col-md-6">
 
-                                    {{-- <div class="form-group">
-                                        <label class="form-label" for="user_id">User </label>
+                                    <div class="form-group">
+                                        <label class="form-label" for="user_id">Dinning Manager</label>
                                         <select class="form-select search-select @error('user_id') is-invalid @enderror"
                                             data-live-search="true" id="user_id" name="user_id">
                                             <option value="">--Choose--</option>
@@ -106,10 +106,10 @@
                                         @error('user_id')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
-                                    </div> --}}
+                                    </div>
 
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
 
                                     <div class="form-group">
                                         <label class="form-label" for="dinning_student_id">Dinning Manager
@@ -130,7 +130,7 @@
                                         @enderror
                                     </div>
 
-                                </div>
+                                </div> --}}
 
 
                             </div>

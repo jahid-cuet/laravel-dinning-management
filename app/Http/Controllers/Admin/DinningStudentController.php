@@ -10,7 +10,9 @@ use App\Models\DinningStudent;
 
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\DinningStudentExport;
-
+use App\Models\Meal;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class DinningStudentController extends Controller
 {
@@ -33,34 +35,30 @@ class DinningStudentController extends Controller
         $info->description = 'These all are Dinning Students';
 
 
-        $per_page = request('per_page', 20);
-        $with_data=[];
+    $per_page = request('per_page', 20);
+    $with_data = [];
 
-        $data = DinningStudent::query();
+// Sum of meals per user
+$mealSums = Meal::select('user_id', DB::raw('SUM(COALESCE(lunch,0) + COALESCE(dinner,0)) as total_meals'))
+    ->groupBy('user_id');
 
-        
-        if(isset($request->search) && trim($request->search)!=''){
-            $search_columns = ['id','student_id','name','txid','total_meals','from','to','paid_status'];
-            $data=keywordBaseSearch(
-                $searh_key=$request->search,
-                $columns_array=$search_columns,
-                $model_query=$data
-            );
-        }
-        
+// Duration (min from, max to) per user
+$durationSub = Meal::join('dinning_months', 'meals.dinning_month_id', '=', 'dinning_months.id')
+    ->select('meals.user_id', 
+        DB::raw('MIN(dinning_months.`from`) as from_date'), 
+        DB::raw('MAX(dinning_months.`to`) as to_date'))
+    ->groupBy('meals.user_id');
 
-        
-        if($request->export_table)
-        {
-            $filePath='DinningStudents.csv';
-            $export_data=$data->get();
-            $excel_data=new DinningStudentExport($export_data);
-            return Excel::download($excel_data, $filePath);
-        }
-        
-
-        $data =$data->orderBy('id', 'DESC');
-        $data =$data->paginate($per_page);
+// Main query: INNER JOIN to only get users with meals
+$data = User::joinSub($mealSums, 'meal_sums', function($join) {
+        $join->on('users.id', '=', 'meal_sums.user_id');
+    })
+    ->leftJoinSub($durationSub, 'durations', function($join) {
+        $join->on('users.id', '=', 'durations.user_id');
+    })
+    ->select('users.*', 'meal_sums.total_meals', 'durations.from_date', 'durations.to_date')
+    ->orderBy('users.id', 'DESC')
+    ->paginate($per_page);
 
         return view('admin.dinning-students.index', compact('page_title', 'data', 'info','per_page'))->with($with_data);
         

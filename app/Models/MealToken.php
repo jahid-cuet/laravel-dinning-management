@@ -18,9 +18,9 @@ class MealToken extends Model
                                 return $query->leftJoin('dinning_students', 'meal_tokens.dinning_student_id', '=', 'dinning_students.id');
                             }
                             
-                        public function dinningStudent()
+                        public function user()
                         {
-                            return $this->belongsTo(DinningStudent::class,'dinning_student_id','id');
+                            return $this->belongsTo(DinningStudent::class,'user_id','id');
                         }
                         //RELATIONAL METHOD
                         

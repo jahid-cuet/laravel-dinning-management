@@ -13,6 +13,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\MealTokenExport;
 use App\Models\DinningStudent;
 use App\Models\Meal;
+use App\Models\User;
 
 class MealTokenController extends Controller
 {
@@ -125,10 +126,7 @@ class MealTokenController extends Controller
         // ->with('success','Meal Token created successfully!');
 
 
-
-
-
-         $student = DinningStudent::where('student_id', $request->student_id)->first();
+         $student = User::where('student_id', $request->student_id)->first();
 
     if (!$student) {
         return response()->json(['status' => 'error', 'message' => 'Invalid Student ID.']);
@@ -136,7 +134,7 @@ class MealTokenController extends Controller
 
     $today = Carbon::now('Asia/Dhaka')->format('Y-m-d');
 
-    $meal = Meal::where('dinning_student_id', $student->id)
+    $meal = Meal::where('user_id', $student->id)
                 ->whereDate('meal_date', $today)
                 ->first();
 

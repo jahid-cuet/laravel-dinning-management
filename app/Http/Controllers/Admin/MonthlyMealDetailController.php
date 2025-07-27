@@ -13,6 +13,7 @@ use App\Exports\MonthlyMealDetailExport;
 use App\Models\DinningMonth;
 use App\Models\DinningStudent;
 use App\Models\Meal;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class MonthlyMealDetailController extends Controller
@@ -41,7 +42,7 @@ class MonthlyMealDetailController extends Controller
 
 
     $userId = auth()->user()->id;
-    $student = DinningStudent::where('user_id', $userId)->first();
+    $student = Meal::where('user_id', $userId)->first();
 
     if (!$student) {
         abort(404, 'Student not found');

@@ -65,9 +65,6 @@
                                 <th>Meals</th>
                                 <th>Duration</th>
                                 <th>Txid</th>
-                                {{-- <th>Dinning Month</th> --}}
-                                <th>Is Active</th>
-                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -78,8 +75,7 @@
 
                             @foreach ($data as $row)
                                 <tr>
-                                    <td>{{ $serial }}
-                                    </td>
+                                    <td>{{ $serial }}</td>
                                     <td>
                                         <div class="trk-item d-flex gap-2">
                                             <div class="trk-thumb thumb-md">
@@ -87,83 +83,28 @@
                                                     alt="avatar">
                                             </div>
                                         </div>
-
-
                                     </td>
-                                    <td>{{ $row->student_id }}
+                                    <td>{{ $row->student_id }}</td>
+                                    <td>{{ $row->name }}</td>
+                                    <td>{{ $row->department?->name }}</td>
+                                    <td>{{ $row->studentSession?->name }} <br> {{ $row->studentSession?->hsc_session }}
                                     </td>
-                                    <td>{{ $row->name }}
-                                    </td>
-                                    <td>{{ $row->department?->name }}
-                                    </td>
-                                      <td>{{ $row->studentSession?->name }} <br>
-                                        {{ $row->studentSession?->hsc_session }}
-                                    </td>
-                                    <td>{{ $row->total_meals }} ({{$row->dinningMonth?->meal_rate * $row->total_meals}} Tk)
-                                    </td>
-                                     <td>
-                                        <span class="text-dark-75 font-weight-bold d-block font-size-lg">
-                                            @if ($row->from && $row->to)
-                                                {{ date('d-m-Y', strtotime($row->from)) }} -
-                                                {{ date('d-m-Y', strtotime($row->to)) }}
-                                            @else
-                                                n/a
-                                            @endif
-                                        </span>
-                                    </td>
-                                    <td>{{ $row->txid }}
-                                    </td>
+                                    {{-- Assuming total_meals is loaded from join --}}
+                                    <td>{{ $row->total_meals ?? 0 }}</td>
                                     
-                                   
-
-                                    {{-- <td>{{ $row->dinningMonth?->title }} --}}
-
-
-                                    </td>
-
-                                  
                                     <td>
-                                        <div class="form-check form-switch form-switch-md">
-                                            <input type="checkbox" name="is_active" value="{{ $row->id }}"
-                                                onclick="toggleSwitchStatus(this,'dinning_students');"
-                                                class="form-check-input" @if ($row->is_active == 1) checked @endif>
-                                        </div>
-
-
-
+                                        @if ($row->from_date && $row->to_date)
+                                            {{ date('d-m-Y', strtotime($row->from_date)) }} -
+                                            {{ date('d-m-Y', strtotime($row->to_date)) }}
+                                        @else
+                                            N/A
+                                        @endif
                                     </td>
-                                    <td>
-                                        <ul class="trk-action__list">
-                                            <li class="trk-action">
-                                                <a class="trk-action__item trk-action__item--success"
-                                                    href="{{ route('admin.dinning-students.show', $row->id) }}">
-                                                    <i class="lni lni-eye"></i>
-                                                </a>
-                                            </li>
-                                            @can('dinning-student-update')
-                                                <li class="trk-action">
-                                                    <a class="trk-action__item trk-action__item--warning"
-                                                        href="{{ route('admin.dinning-students.edit', $row->id) }}">
-                                                        <i class="lni lni-pencil-alt"></i>
-                                                    </a>
-                                                </li>
-                                            @endcan
-                                            @can('dinning-student-delete')
-                                                <li class="trk-action">
-                                                    <a onclick="deleteCrudItem(`{{ route('admin.dinning-students.destroy', $row->id) }}`)"
-                                                        class="trk-action__item trk-action__item--danger" href="#">
-                                                        <i class="lni lni-trash-can"></i>
-                                                    </a>
-                                                </li>
-                                            @endcan
-                                        </ul>
-
-                                    </td>
+                                    <td>{{ $row->txid }}</td>
                                 </tr>
-                                @php
-                                    $serial++;
-                                @endphp
+                                @php $serial++; @endphp
                             @endforeach
+
                         </tbody>
                     </table>
 

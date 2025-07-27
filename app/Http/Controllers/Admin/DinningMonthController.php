@@ -115,7 +115,6 @@ class DinningMonthController extends Controller
                     
             'user_id' => 'nullable|integer',
                     
-            // 'dinning_student_id' => 'required|integer',
                     
         ];
         $this->validate($request, $validation_rules);
@@ -130,8 +129,6 @@ class DinningMonthController extends Controller
         $row->to = $request->to;
         
         $row->user_id = $request->user_id;
-        
-        $row->dinning_student_id = $request->dinning_student_id;
         
         $row->save();
         
@@ -189,7 +186,7 @@ class DinningMonthController extends Controller
                     
             'user_id' => 'nullable|integer',
                     
-            'dinning_student_id' => 'required|integer',
+            // 'dinning_student_id' => 'required|integer',
                     
         ];
         $this->validate($request, $validation_rules);
@@ -211,7 +208,7 @@ class DinningMonthController extends Controller
         
         $row->user_id=$request->user_id;
         
-        $row->dinning_student_id=$request->dinning_student_id;
+        // $row->dinning_student_id=$request->dinning_student_id;
         
         $row->save();
         
