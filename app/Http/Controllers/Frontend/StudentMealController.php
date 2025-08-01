@@ -26,7 +26,7 @@ class StudentMealController extends Controller
         return redirect()->back()->with('error', 'No active month found.');
     }
 
-$mealRate = $month->meal_rate; // adjust logic to get correct month
+    $mealRate = $month->meal_rate; // adjust logic to get correct month
 
 
     // Start from today or from_date (whichever is later)
@@ -41,9 +41,13 @@ $mealRate = $month->meal_rate; // adjust logic to get correct month
 
 
 // Now it's safe to use $student->id
-$meals = Meal::whereBetween('meal_date', [$startDate, $to])
+$meals = Meal::where('user_id', auth()->id())
+    ->whereBetween('meal_date', [$startDate, $to])
     ->get()
-    ->keyBy('meal_date');
+    ->keyBy(function ($meal) {
+        return Carbon::parse($meal->meal_date)->toDateString();
+    });
+
 
         $data = DinningMonth::query();
 
@@ -71,44 +75,53 @@ $meals = Meal::whereBetween('meal_date', [$startDate, $to])
     public function store(Request $request)
     {
 
-    // You should validate input here (optional)
-    $data = $request->validate([
+     $data = $request->validate([
         'meals' => 'array',
         'meals.*.lunch' => 'nullable|in:1',
         'meals.*.dinner' => 'nullable|in:1',
-        // 'dinning_month_id' => 'required|exists:dinning_months,id',
+        'meal_rate' => 'required|numeric',
     ]);
 
-    // Set your student and month IDs however you get them
-    $userId = auth()->user()->id; // example: logged-in user id
+    $userId = auth()->id();
+    $totalMeals = 0;
 
     foreach ($data['meals'] ?? [] as $date => $meals) {
-        // Find existing or create new record for this date, student, and month
+        $isLunch = isset($meals['lunch']);
+        $isDinner = isset($meals['dinner']);
+
         $meal = DB::table('meals')->where([
             ['meal_date', '=', $date],
             ['user_id', '=', $userId],
         ])->first();
 
         if ($meal) {
-            // Update existing
             DB::table('meals')->where('id', $meal->id)->update([
-                'lunch' => isset($meals['lunch']) ? 1 : 0,
-                'dinner' => isset($meals['dinner']) ? 1 : 0,
+                'lunch' => $isLunch ? 1 : 0,
+                'dinner' => $isDinner ? 1 : 0,
             ]);
         } else {
-            // Insert new
             DB::table('meals')->insert([
                 'meal_date' => $date,
-                'lunch' => isset($meals['lunch']) ? 1 : 0,
-                'dinner' => isset($meals['dinner']) ? 1 : 0,
+                'lunch' => $isLunch ? 1 : 0,
+                'dinner' => $isDinner ? 1 : 0,
                 'user_id' => $userId,
                 'dinning_month_id' => $request->dinning_month_id,
                 'order' => 0,
             ]);
         }
+
+        $totalMeals += ($isLunch ? 1 : 0) + ($isDinner ? 1 : 0);
     }
 
+    $totalPayable = $totalMeals * $request->meal_rate;
+
     return redirect()->back()->with('success', 'Meal selections saved successfully.');
+
+    // return view('exampleEasycheckout',compact('totalPayable'));
+//     return redirect()->route('checkout')->with([
+//     'totalMeals' => $totalMeals,
+//     'totalPayable' => $totalPayable,
+// ]);
 }
 
     
@@ -183,4 +196,24 @@ $meals = DB::table('meals')
     {
         //
     }
+
+
+public function paymentHistory()
+{
+    $user_id = auth()->id();
+
+    // Get all orders/payments for the logged-in user
+    $orders = DB::table('orders')
+        ->where('user_id', $user_id)
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    return view('payment-history', compact('orders'));
+}
+
+
+
+
+
+
 }

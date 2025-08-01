@@ -45,6 +45,7 @@
         Refund request
     </a>
 
+
     @php
     $hasDinningMonth = \App\Models\DinningMonth::where('user_id', auth()->id())->exists();
 @endphp
@@ -55,6 +56,14 @@
             Monthly Meal Details
         </a>
     @endif
+
+
+
+        <a href="{{ route('student.payment-history') }}"
+       class="block px-4 py-2 rounded {{ $currentRoute == 'student.payment-history' ? 'bg-blue-100 text-blue-700 font-semibold' : 'hover:bg-gray-200' }}">
+        Payment History
+    </a>
+    
 </nav>
 
             <div class="mt-10">

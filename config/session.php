@@ -168,7 +168,7 @@ return [
     |
     */
 
-    'secure' => env('SESSION_SECURE_COOKIE'),
+    'secure' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -196,11 +196,11 @@ return [
     |
     */
 
-    'same_site' => 'lax',
+    'same_site' => null,
 
     /*
     |--------------------------------------------------------------------------
-    | Partitioned Cookies
+    | Partitioned Cooes
     |--------------------------------------------------------------------------
     |
     | Setting this value to true will tie the cookie to the top-level site for

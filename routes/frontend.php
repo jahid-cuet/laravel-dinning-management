@@ -24,6 +24,7 @@ Route::group(['as' => 'student.', 'prefix' => 'student', 'middleware' => 'auth']
     Route::post('refund-request', [StudentRefundRequestController::class, 'store'])->name('refund-request.store');
     Route::get('monthly-meal-details', [StudentMealController::class, 'monthlyMealDetails'])->name('monthly-meal-details');
     Route::get('daily-meal-details/{date}', [StudentMealController::class, 'dailyMealDetails'])->name('daily-meal-details');
+    Route::get('payment-history', [StudentMealController::class, 'paymentHistory'])->name('payment-history');
 
     
 

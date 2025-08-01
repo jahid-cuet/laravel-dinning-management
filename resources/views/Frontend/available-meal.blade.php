@@ -115,6 +115,8 @@
 
 <!-- Pass meal rate to JS -->
 <input type="hidden" id="mealRate" value="{{ $mealRate }}">
+<input type="hidden" name="meal_rate" value="{{ $mealRate }}">
+
 
 </div>
 
