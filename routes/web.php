@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,7 +9,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ArtisanController;
@@ -39,43 +37,27 @@ use App\Http\Controllers\LangController;
 use App\Http\Controllers\SslCommerzPaymentController;
 use Spatie\Health\Http\Controllers\HealthCheckResultsController;
 
-
-
 Route::group(['middleware' => 'auth'], function () {
-// SSLCOMMERZ Start
+
 // Route::get('/checkout', [SslCommerzPaymentController::class, 'exampleEasyCheckout'])->name('checkout');
-// Route::get('/checkout', [SslCommerzPaymentController::class, 'exampleHostedCheckout'])->name('checkout');
 
-Route::post('/pay', [SslCommerzPaymentController::class, 'index']);
-
-Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax'])->name('pay-via-ajax');
-
+// SSLCOMMERZ Start
+Route::get('/checkout', [SslCommerzPaymentController::class, 'exampleHostedCheckout'])->name('checkout');
+Route::post('/pay', [SslCommerzPaymentController::class, 'index'])->name('pay');
 Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
-//SSLCOMMERZ END
 
+// Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax'])->name('pay-via-ajax');
+
+
+//SSLCOMMERZ END
 
 
 });
 Route::post('/success', [SslCommerzPaymentController::class, 'success']);
 Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
 Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
+
 // Route::get('/payment-history', [StudentMealController::class, 'paymentHistory'])->name('payment.history');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //Breeze Start
@@ -85,13 +67,9 @@ Route::get('/', function () {
 
 
 
-
 Route::get('/login', function () {
     return redirect('admin/login');
 });
-
-
-
 
 
 // Route::get('/user/login', function () {    //temporary
@@ -113,8 +91,6 @@ Route::get('/user/logout', function () {    //temporary
 require __DIR__.'/auth.php';
 
 //Breeze End
-
-
 
 
 

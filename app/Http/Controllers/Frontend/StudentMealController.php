@@ -115,16 +115,15 @@ $meals = Meal::where('user_id', auth()->id())
 
     $totalPayable = $totalMeals * $request->meal_rate;
 
-    return redirect()->back()->with('success', 'Meal selections saved successfully.');
+    // return redirect()->back()->with('success', 'Meal selections saved successfully.');
 
-    // return view('exampleEasycheckout',compact('totalPayable'));
-//     return redirect()->route('checkout')->with([
-//     'totalMeals' => $totalMeals,
-//     'totalPayable' => $totalPayable,
-// ]);
+    // return view('exampleHosted',compact('totalPayable'));
+    return redirect()->route('checkout')->with([
+    'totalMeals' => $totalMeals,
+    'totalPayable' => $totalPayable,
+]);
 }
 
-    
 
     /**
      * Display the specified resource.

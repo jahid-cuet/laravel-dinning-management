@@ -45,11 +45,14 @@
     "autoload": {
         "files": [
             "app/Helpers/helper.php"
+   
+
         ],
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
+            "Database\\Seeders\\": "database/seeders/",
+            "App\\Library\\": "app/Library/"
         }
     },
     "autoload-dev": {
